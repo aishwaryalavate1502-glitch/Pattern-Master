@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pattern Master – Pattern Printing Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast hidden">
+        <i class="fa-solid fa-circle-check"></i> <span id="toast-message">Action successful!</span>
+    </div>
+
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-brand" onclick="switchTab('home')">
+            <div class="logo-icon"><i class="fa-solid fa-code"></i></div>
+            <span>Pattern<span>Master</span></span>
+        </div>
+        <nav class="nav-links">
+            <a href="#home" class="nav-link active" onclick="switchTab('home')"><i class="fa-solid fa-house"></i> Home</a>
+            <a href="#generator" class="nav-link" onclick="switchTab('generator')"><i class="fa-solid fa-wand-magic-sparkles"></i> Generator</a>
+            <a href="#patterns" class="nav-link" onclick="switchTab('patterns')"><i class="fa-solid fa-layer-group"></i> Patterns</a>
+            <a href="#favorites" class="nav-link" onclick="switchTab('favorites')"><i class="fa-solid fa-star"></i> Favorites</a>
+        </nav>
+        <div class="nav-actions">
+            <button id="theme-toggle" class="icon-btn" title="Toggle Theme">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+            <button class="menu-toggle icon-btn" id="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-container">
+
+        <!-- ==================== HOME SECTION ==================== -->
+        <section id="home-section" class="section active-section">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <span class="badge"><i class="fa-solid fa-bolt"></i> Interactive Logic Builder</span>
+                    <h1 class="hero-title">Generate. Learn. <br><span class="gradient-text">Master Programming</span> Patterns.</h1>
+                    <p class="hero-subtitle">
+                        The ultimate interactive playground for students learning loops, conditional logic, and spatial pattern printing across Python, C, C++, Java, and JavaScript.
+                    </p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" onclick="switchTab('generator')">
+                            <i class="fa-solid fa-play"></i> Start Generating
+                        </button>
+                        <button class="btn btn-secondary" onclick="switchTab('patterns')">
+                            <i class="fa-solid fa-book-open">Explore All Patterns</i>
+                        </button>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-num" id="total-patterns-count">35+</span>
+                            <span class="stat-label">Pattern Types</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <span class="stat-num">5</span>
+                            <span class="stat-label">Languages</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <span class="stat-num">100%</span>
+                            <span class="stat-label">Interactive</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-preview-card glass-card">
+                    <div class="code-window-header">
+                        <div class="dots">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                        </div>
+                        <span class="window-title">live_pyramid.js</span>
+                        <button class="copy-mini-btn" onclick="copyHeroSnippet()"><i class="fa-regular fa-copy"></i></button>
+                    </div>
+                    <pre class="code-preview-body"><code><span class="keyword">let</span> rows = <span class="number">5</span>;
+<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i <= rows; i++) {
+    <span class="keyword">let</span> spaces = <span class="string">" "</span>.repeat(rows - i);
+    <span class="keyword">let</span> stars = <span class="string">"*"</span>.repeat(<span class="number">2</span> * i - <span class="number">1</span>);
+    console.log(spaces + stars);
+}</code></pre>
+                    <div class="live-hero-output" id="hero-live-output">
+                        &nbsp;&nbsp;&nbsp;&nbsp;*<br>&nbsp;&nbsp;&nbsp;***<br>&nbsp;&nbsp;*****<br>&nbsp;*******<br>*********
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Category Showcase -->
+            <div class="home-showcase">
+                <h2>Popular Categories</h2>
+                <div class="category-cards-grid">
+                    <div class="cat-card glass-card" onclick="filterAndGo('star')">
+                        <i class="fa-solid fa-star"></i>
+                        <h3>Star Patterns</h3>
+                        <p>Pyramids, diamonds, triangles & more.</p>
+                    </div>
+                    <div class="cat-card glass-card" onclick="filterAndGo('number')">
+                        <i class="fa-solid fa-list-ol"></i>
+                        <h3>Number Patterns</h3>
+                        <p>Floyd's, Pascal's, triangles & pyramids.</p>
+                    </div>
+                    <div class="cat-card glass-card" onclick="filterAndGo('alphabet')">
+                        <i class="fa-solid fa-font"></i>
+                        <h3>Alphabet Patterns</h3>
+                        <p>Character squares, pyramids & letters.</p>
+                    </div>
+                    <div class="cat-card glass-card" onclick="filterAndGo('special')">
+                        <i class="fa-solid fa-gears"></i>
+                        <h3>Special Patterns</h3>
+                        <p>Binary triangles, zig-zag & X patterns.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== GENERATOR SECTION ==================== -->
+        <section id="generator-section" class="section">
+            <div class="section-header">
+                <h2><i class="fa-solid fa-wand-magic-sparkles"></i> Pattern Generator Studio</h2>
+                <p>Customize row count, select pattern types, and inspect algorithms instantly.</p>
+            </div>
+
+            <div class="generator-workspace">
+                <!-- Controls Pane -->
+                <div class="controls-pane glass-card">
+                    <h3><i class="fa-solid fa-sliders"></i> Configuration</h3>
+                    
+                    <!-- Search Filter inside generator -->
+                    <div class="input-group">
+                        <label for="pattern-search"><i class="fa-solid fa-magnifying-glass"></i> Search Pattern</label>
+                        <input type="text" id="pattern-search" placeholder="Search pyramid, diamond, binary..." oninput="handleSearch()">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="pattern-select"><i class="fa-solid fa-list"></i> Select Pattern</label>
+                        <select id="pattern-select" onchange="onPatternChange()">
+                            <!-- Dynamically populated via JS -->
+                        </select>
+                    </div>
+
+                    <div class="row-col-grid">
+                        <div class="input-group">
+                            <label for="row-input"><i class="fa-solid fa-arrows-up-down"></i> Rows (1 - 50)</label>
+                            <input type="number" id="row-input" value="5" min="1" max="50" oninput="triggerGeneration()">
+                        </div>
+                        <div class="input-group" id="col-group">
+                            <label for="col-input"><i class="fa-solid fa-arrows-left-right"></i> Columns</label>
+                            <input type="number" id="col-input" value="5" min="1" max="50" oninput="triggerGeneration()">
+                        </div>
+                    </div>
+
+                    <div class="input-group" id="char-group">
+                        <label for="char-input"><i class="fa-solid fa-icons"></i> Custom Symbol (for Star/Char patterns)</label>
+                        <input type="text" id="char-input" value="*" maxlength="3" oninput="triggerGeneration()">
+                    </div>
+
+                    <div class="control-buttons">
+                        <button class="btn btn-primary" onclick="triggerGeneration()"><i class="fa-solid fa-rotate"></i> Generate</button>
+                        <button class="btn btn-secondary" onclick="resetGenerator()"><i class="fa-solid fa-arrow-rotate-left"></i> Reset</button>
+                        <button class="btn btn-icon" id="favorite-btn" onclick="toggleCurrentFavorite()" title="Mark as Favorite"><i class="fa-regular fa-star" id="fav-icon"></i></button>
+                    </div>
+
+                    <!-- Live Counter Widget -->
+                    <div class="counter-box">
+                        <div class="counter-item"><span>Total Patterns:</span> <strong id="cnt-total">0</strong></div>
+                        <div class="counter-item"><span>Rows:</span> <strong id="cnt-rows">5</strong></div>
+                        <div class="counter-item"><span>Characters:</span> <strong id="cnt-chars">0</strong></div>
+                    </div>
+                </div>
+
+                <!-- Output Pane -->
+                <div class="output-pane">
+                    <!-- Visual Output Card -->
+                    <div class="glass-card output-card">
+                        <div class="output-header">
+                            <div class="output-title-wrap">
+                                <h3 id="current-pattern-title">Pyramid Pattern</h3>
+                                <span class="difficulty-badge" id="current-diff">Medium</span>
+                            </div>
+                            <div class="output-actions">
+                                <button class="btn-sm" onclick="copyPatternOutput()" title="Copy Pattern"><i class="fa-regular fa-copy"></i> Copy</button>
+                                <button class="btn-sm" onclick="downloadPatternTXT()" title="Download TXT"><i class="fa-solid fa-download"></i> TXT</button>
+                            </div>
+                        </div>
+
+                        <!-- Error Box -->
+                        <div id="error-alert" class="error-alert hidden">
+                            <i class="fa-solid fa-triangle-exclamation"></i> <span id="error-msg">Invalid row input. Please enter between 1 and 50.</span>
+                        </div>
+
+                        <!-- Code-style Box for Pattern -->
+                        <div class="pattern-display-container">
+                            <pre id="pattern-output-box"><code>Loading pattern...</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- Code Logic & Explanation Tabs Card -->
+                    <div class="glass-card logic-card">
+                        <div class="logic-tabs-header">
+                            <div class="tab-buttons">
+                                <button class="tab-btn active" onclick="switchLogicTab('code')"><i class="fa-solid fa-code"></i> Implementation Code</button>
+                                <button class="tab-btn" onclick="switchLogicTab('explanation')"><i class="fa-solid fa-brain"></i> Logic & Complexity</button>
+                            </div>
+                            <div id="code-lang-selector" class="lang-selector-wrap">
+                                <select id="code-language" onchange="updateCodeDisplay()">
+                                    <option value="python">Python</option>
+                                    <option value="javascript">JavaScript</option>
+                                    <option value="cpp">C++</option>
+                                    <option value="c">C</option>
+                                    <option value="java">Java</option>
+                                </select>
+                                <button class="btn-sm" onclick="copyCodeSnippet()"><i class="fa-regular fa-copy"></i> Copy Code</button>
+                                <button class="btn-sm" onclick="downloadCodeTXT()"><i class="fa-solid fa-download"></i> Code TXT</button>
+                            </div>
+                        </div>
+
+                        <!-- Tab Content: Code -->
+                        <div id="tab-content-code" class="tab-pane active">
+                            <pre><code id="code-snippet-box" class="language-code"># Select a pattern to view code</code></pre>
+                        </div>
+
+                        <!-- Tab Content: Explanation -->
+                        <div id="tab-content-explanation" class="tab-pane">
+                            <div class="explanation-content">
+                                <h4 id="exp-name">Pyramid Pattern</h4>
+                                <p id="exp-desc">Prints a symmetrical centered pyramid of characters.</p>
+                                <h5><i class="fa-solid fa-lightbulb"></i> Algorithm Logic:</h5>
+                                <p id="exp-logic">Outer loop controls row count. Inner loop prints leading spaces followed by characters.</p>
+                                <div class="complexity-grid">
+                                    <div class="comp-box">
+                                        <span class="comp-title">Time Complexity</span>
+                                        <strong id="exp-time">O(N²)</strong>
+                                    </div>
+                                    <div class="comp-box">
+                                        <span class="comp-title">Space Complexity</span>
+                                        <strong id="exp-space">O(1)</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PATTERNS CATALOG SECTION ==================== -->
+        <section id="patterns-section" class="section">
+            <div class="section-header">
+                <h2><i class="fa-solid fa-layer-group"></i> All Pattern Catalog</h2>
+                <p>Browse through our extensive library of patterns categorized by structure.</p>
+            </div>
+            
+            <div class="catalog-filters">
+                <button class="filter-chip active" onclick="filterCatalog('all')">All</button>
+                <button class="filter-chip" onclick="filterCatalog('star')">Star</button>
+                <button class="filter-chip" onclick="filterCatalog('number')">Number</button>
+                <button class="filter-chip" onclick="filterCatalog('alphabet')">Alphabet</button>
+                <button class="filter-chip" onclick="filterCatalog('special')">Special</button>
+            </div>
+
+            <div class="patterns-grid" id="patterns-catalog-grid">
+                <!-- Populated by JS -->
+            </div>
+        </section>
+
+        <!-- ==================== FAVORITES SECTION ==================== -->
+        <section id="favorites-section" class="section">
+            <div class="section-header">
+                <h2><i class="fa-solid fa-star"></i> Favorite Patterns</h2>
+                <p>Quickly access your starred patterns saved in your browser.</p>
+            </div>
+            <div class="patterns-grid" id="favorites-catalog-grid">
+                <!-- Populated by JS -->
+            </div>
+            <div id="no-favorites" class="no-favorites-msg hidden">
+                <i class="fa-regular fa-star"></i>
+                <p>No favorite patterns added yet. Click the star icon on any pattern to save it here!</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Pattern Master &copy; 2026 | Built for Students & Programming Enthusiasts.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
